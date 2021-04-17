@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.RecNotesConMapper">
+    
+    <resultMap type="RecNotesCon" id="RecNotesConResult">
+        <result property="notesId"    column="notes_id"    />
+        <result property="recordId"    column="record_id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="label"    column="label"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="r1_flag"    column="r1_flag"    />
+        <result property="r2_flag"    column="r2_flag"    />
+        <result property="r3_flag"    column="r3_flag"    />
+        <result property="r4_flag"    column="r4_flag"    />
+    </resultMap>
+
+    <sql id="selectRecNotesConVo">
+        select notes_id, record_id, title, content, label, create_by, create_time, update_by, update_time, user_id, dept_id, r1_flag, r2_flag, r3_flag, r4_flag from rec_notes_con
+    </sql>
+
+    <select id="selectRecNotesConList" parameterType="RecNotesCon" resultMap="RecNotesConResult">
+        <include refid="selectRecNotesConVo"/>
+        <where>  
+            <if test="recordId != null "> and record_id = #{recordId}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="label != null  and label != ''"> and label = #{label}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+<!--            <if test="r1_flag != null "> and r1_flag = #{r1_flag}</if>-->
+<!--            <if test="r2_flag != null "> and r2_flag = #{r2_flag}</if>-->
+<!--            <if test="r3_flag != null "> and r3_flag = #{r3_flag}</if>-->
+<!--            <if test="r4_flag != null "> and r4_flag = #{r4_flag}</if>-->
+        </where>
+    </select>
+    
+    <select id="selectRecNotesConById" parameterType="Long" resultMap="RecNotesConResult">
+        <include refid="selectRecNotesConVo"/>
+        where notes_id = #{notesId}
+    </select>
+        
+    <insert id="insertRecNotesCon" parameterType="RecNotesCon" useGeneratedKeys="true" keyProperty="notesId">
+        insert into rec_notes_con
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">record_id,</if>
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="label != null">label,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="r1_flag != null ">r1_flag,</if>
+            <if test="r2_flag != null ">r2_flag,</if>
+            <if test="r3_flag != null ">r3_flag,</if>
+            <if test="r4_flag != null ">r4_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recordId != null">#{recordId},</if>
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="label != null">#{label},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="r1_flag != null ">#{r1_flag},</if>
+            <if test="r2_flag != null ">#{r2_flag},</if>
+            <if test="r3_flag != null ">#{r3_flag},</if>
+            <if test="r4_flag != null ">#{r4_flag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRecNotesCon" parameterType="RecNotesCon">
+        update rec_notes_con
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="recordId != null">record_id = #{recordId},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="label != null">label = #{label},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="r1_flag != null">r1_flag = #{r1_flag},</if>
+            <if test="r2_flag != null">r2_flag = #{r2_flag},</if>
+            <if test="r3_flag != null">r3_flag = #{r3_flag},</if>
+            <if test="r4_flag != null">r4_flag = #{r4_flag},</if>
+        </trim>
+        where notes_id = #{notesId}
+    </update>
+
+    <delete id="deleteRecNotesConById" parameterType="Long">
+        delete from rec_notes_con where notes_id = #{notesId}
+    </delete>
+
+    <delete id="deleteRecNotesConByIds" parameterType="String">
+        delete from rec_notes_con where notes_id in 
+        <foreach item="notesId" collection="array" open="(" separator="," close=")">
+            #{notesId}
+        </foreach>
+    </delete>
+
+</mapper>

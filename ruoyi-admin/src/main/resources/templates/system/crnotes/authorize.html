@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <th:block th:include="include :: header('确认授权')" />
+  <th:block th:include="include :: summernote-css" />
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-crnotes-edit" th:object="${recNotesCon}">
+        <p>确定授权吗？</p>
+        <input name="notesId" th:field="*{notesId}" type="hidden">
+        <div class="form-group" type="hidden" style="display: none">
+            <label class="col-sm-2 control-label">笔记类型：</label>
+            <div class="col-sm-10" >
+                <select name="recordId" class="form-control m-b" th:with="type=${@dict.getType('notes')}">
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{recordId}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            <label class="col-sm-2 control-label">标题：</label>
+            <div class="col-sm-10">
+                <input name="title" th:field="*{title}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            <label class="col-sm-2 control-label">内容：</label>
+            <div class="col-sm-10">
+                <input type="hidden" class="form-control" th:field="*{content}">
+                <div class="summernote" id="content"></div>
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            <label class="col-sm-2 control-label">标签：</label>
+            <div class="col-sm-10">
+                <input name="label" th:field="*{label}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            <label class="col-sm-2 control-label">用户ID：</label>
+            <div class="col-sm-10">
+                <input name="userId" th:field="*{userId}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            <label class="col-sm-2 control-label">部门ID：</label>
+            <div class="col-sm-10">
+                <input name="deptId" th:field="*{deptId}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            <label class="col-sm-2 control-label">r1_flag：</label>
+            <div class="col-sm-10">
+                <input name="deptId" th:field="*{r1_flag}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            <label class="col-sm-2 control-label">r2_flag：</label>
+            <div class="col-sm-10">
+                <input name="deptId" th:field="*{r2_flag}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            <label class="col-sm-2 control-label">r3_flag：</label>
+            <div class="col-sm-10">
+                <input name="deptId" th:field="*{r3_flag}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            <label class="col-sm-2 control-label">r4_flag：</label>
+            <div class="col-sm-10">
+                <input name="deptId" th:field="*{r4_flag}" class="form-control" type="text">
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<th:block th:include="include :: summernote-js" />
+<script th:inline="javascript">
+    var prefix = ctx + "system/crnotes";
+    $("#form-crnotes-edit").validate({
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            $.operate.save(prefix + "/confirm", $('#form-crnotes-edit').serialize());
+        }
+    }
+
+    $(function() {
+        $('.summernote').each(function(i) {
+            $('#' + this.id).summernote({
+                lang: 'zh-CN',
+                callbacks: {
+                    onChange: function(contents, $edittable) {
+                        $("input[name='" + this.id + "']").val(contents);
+                    },
+                }
+            });
+            var content = $("input[name='" + this.id + "']").val();
+            $('#' + this.id).summernote('code', content);
+        })
+    });
+</script>
+</body>
+
+</html>
